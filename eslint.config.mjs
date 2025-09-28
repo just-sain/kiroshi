@@ -1,97 +1,93 @@
-import js from "@eslint/js";
-import importPlugin from "eslint-plugin-import";
-import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
-import prettierPlugin from "eslint-plugin-prettier";
-import reactPlugin from "eslint-plugin-react";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
-import unusedImportsPlugin from "eslint-plugin-unused-imports";
-import tseslint from "typescript-eslint";
+// eslint.config.mjs
+import js from '@eslint/js'
+import importPlugin from 'eslint-plugin-import'
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y'
+import prettierPlugin from 'eslint-plugin-prettier'
+import reactPlugin from 'eslint-plugin-react'
+import reactHooksPlugin from 'eslint-plugin-react-hooks'
+import unusedImportsPlugin from 'eslint-plugin-unused-imports'
+import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
 	js.configs.recommended,
+	tseslint.configs.recommended,
+
 	{
-		files: ["**/*.{js,jsx,ts,tsx}"],
-		ignores: ["node_modules", ".next"],
+		files: ['**/*.{js,jsx,ts,tsx}'],
+		ignores: ['node_modules', '.next', 'dist', 'build', 'out'],
+
 		languageOptions: {
 			parser: tseslint.parser,
 			parserOptions: {
 				ecmaFeatures: { jsx: true },
-				ecmaVersion: "latest",
-				sourceType: "module",
-			},
-			globals: {
-				// browser: false 
-				// // если нужен browser, поставить true
-				window: "readonly",
-				document: "readonly",
+				ecmaVersion: 'latest',
+				sourceType: 'module',
 			},
 		},
+
 		plugins: {
 			react: reactPlugin,
-			"react-hooks": reactHooksPlugin,
-			"jsx-a11y": jsxA11yPlugin,
+			'react-hooks': reactHooksPlugin,
+			'jsx-a11y': jsxA11yPlugin,
 			prettier: prettierPlugin,
 			import: importPlugin,
-			"unused-imports": unusedImportsPlugin,
-			"@typescript-eslint": tseslint.plugin,
+			'unused-imports': unusedImportsPlugin,
+			'@typescript-eslint': tseslint.plugin,
 		},
+
 		settings: {
-			react: { version: "detect" },
+			react: { version: 'detect' },
 		},
+
 		rules: {
-			"no-console": "warn",
-			"react/prop-types": "off",
-			"react/jsx-uses-react": "off",
-			"react/react-in-jsx-scope": "off",
-			"react-hooks/exhaustive-deps": "off",
-			"jsx-a11y/click-events-have-key-events": "warn",
-			"jsx-a11y/interactive-supports-focus": "warn",
-			"prettier/prettier": "warn",
+			// base
+			'no-console': 'warn',
+			'prettier/prettier': 'warn',
 
-			"no-unused-vars": "off",
-			"unused-imports/no-unused-vars": "off",
-			"unused-imports/no-unused-imports": "warn",
+			// react
+			'react/prop-types': 'off',
+			'react/jsx-uses-react': 'off',
+			'react/react-in-jsx-scope': 'off',
+			'react-hooks/exhaustive-deps': 'off',
 
-			"object-curly-spacing": ["error", "never"],
+			// jsx ally
+			'jsx-a11y/click-events-have-key-events': 'warn',
+			'jsx-a11y/interactive-supports-focus': 'warn',
 
+			// imports
+			'no-unused-vars': 'off',
+			'unused-imports/no-unused-vars': 'off',
+			'unused-imports/no-unused-imports': 'warn',
 
-			"@typescript-eslint/no-unused-vars": [
-				"warn", 
+			'import/order': [
+				'warn',
 				{
-					args: "after-used",
-					ignoreRestSiblings: false,
-					argsIgnorePattern: "^_.*?$",
-				},
-			],
-
-			"import/order": [
-				"warn",
-				{
-					groups: [
-						"type",
-						"builtin",
-						"object",
-						"external",
-						"internal",
-						"parent",
-						"sibling",
-						"index",
-					],
+					groups: ['type', 'builtin', 'object', 'external', 'internal', 'parent', 'sibling', 'index'],
 					pathGroups: [
 						{
-							pattern: "~/**",
-							group: "external",
-							position: "after",
+							pattern: '~/**',
+							group: 'external',
+							position: 'after',
 						},
 					],
-					"newlines-between": "always",
+					'newlines-between': 'never',
 				},
 			],
 
-			"react/self-closing-comp": "warn",
+			// ts
+			'@typescript-eslint/no-unused-vars': [
+				'warn',
+				{
+					args: 'after-used',
+					ignoreRestSiblings: false,
+					argsIgnorePattern: '^_.*?$',
+				},
+			],
 
-			"react/jsx-sort-props": [
-				"warn",
+			'object-curly-spacing': ['error', 'always'],
+			'react/self-closing-comp': 'warn',
+			'react/jsx-sort-props': [
+				'warn',
 				{
 					callbacksLast: true,
 					shorthandFirst: true,
@@ -100,17 +96,25 @@ export default tseslint.config(
 				},
 			],
 
-			"padding-line-between-statements": [
-				"warn",
-				{ blankLine: "always", prev: "*", next: "return" },
-				{ blankLine: "always", prev: ["const", "let", "var"], next: "*" },
+			'padding-line-between-statements': [
+				'warn',
+				{ blankLine: 'always', prev: '*', next: 'return' },
+				{ blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
 				{
-					blankLine: "any",
-					prev: ["const", "let", "var"],
-					next: ["const", "let", "var"],
+					blankLine: 'any',
+					prev: ['const', 'let', 'var'],
+					next: ['const', 'let', 'var'],
+				},
+			],
+
+			'@typescript-eslint/triple-slash-reference': [
+				'error',
+				{
+					path: 'always',
+					types: 'always',
+					lib: 'always',
 				},
 			],
 		},
-	}
-);
-
+	},
+)
