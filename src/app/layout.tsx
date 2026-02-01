@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
-import { ASidebar, Footer } from '@layout'
-import { ASidebarProvider, AuthProvider, QueryProvider, ThemeProvider } from '@providers'
-import { SidebarInset, Toaster } from '@shadcn'
+import { Footer, NavigationMenuDemo } from '@layout'
+import { AuthProvider, QueryProvider, ThemeProvider } from '@providers'
+import { Toaster } from '@shadcn'
 import 'react-medium-image-zoom/dist/styles.css'
 
 import './globals.css'
@@ -29,17 +29,14 @@ export default function RootLayout({
 			<body className='min-h-screen antialiased flex flex-col'>
 				<ThemeProvider>
 					<QueryProvider>
-						<ASidebarProvider>
-							<AuthProvider />
+						<AuthProvider />
 
-							<ASidebar />
-							<SidebarInset className='flex-1 min-w-0 justify-between items-stretch'>
-								{children}
+						<NavigationMenuDemo />
 
-								<Toaster position='top-center' />
-								<Footer />
-							</SidebarInset>
-						</ASidebarProvider>
+						<main>{children}</main>
+
+						<Toaster position='top-center' />
+						<Footer />
 					</QueryProvider>
 				</ThemeProvider>
 			</body>

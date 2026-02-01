@@ -44,12 +44,11 @@ export interface IUser {
 export interface INav {
 	title: string
 	url: string
-	icon: LucideIcon
-	defaultOpen?: boolean
 	role?: RoleEnum
 	items?: {
-		icon: LucideIcon
+		icon?: LucideIcon
 		title: string
+		description: string
 		url: string
 		role?: RoleEnum
 	}[]
