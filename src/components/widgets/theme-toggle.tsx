@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { type ComponentProps, useEffect, useState } from 'react'
 
 import { useTheme } from 'next-themes'
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, SidebarMenuButton } from '@shadcn'
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@shadcn'
 import { Monitor, Moon, Sun } from 'lucide-react'
 
 enum ThemeEnum {
@@ -13,7 +13,11 @@ enum ThemeEnum {
 	system = 'Системная тема',
 }
 
-export function ThemeToggle() {
+interface IProps extends ComponentProps<typeof DropdownMenu> {
+	showText?: boolean
+}
+
+export const ThemeToggle = ({ showText = false, ...props }: IProps) => {
 	const [themeText, setThemeText] = useState(ThemeEnum.system)
 	const { setTheme, theme } = useTheme()
 
@@ -24,14 +28,14 @@ export function ThemeToggle() {
 	}, [theme])
 
 	return (
-		<DropdownMenu>
+		<DropdownMenu {...props}>
 			<DropdownMenuTrigger asChild>
-				<SidebarMenuButton>
+				<Button className='w-9 px-0' size='icon' variant='outline'>
 					<Sun className='h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90' />
 					<Moon className='absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0' />
 
-					<span className='text-xs'>{themeText}</span>
-				</SidebarMenuButton>
+					{showText && <span className='text-xs'>{themeText}</span>}
+				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align='end'>
 				<DropdownMenuItem onClick={() => setTheme('light')}>

@@ -1,1 +1,5 @@
+export * from './author-badge'
+export * from './feature-card'
+export * from './info-card'
+export * from './logotype'
 export * from './theme-toggle'

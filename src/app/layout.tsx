@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 
-import { Footer, NavigationMenuDemo } from '@layout'
+import { BgEffects, Footer, Header } from '@layout'
 import { AuthProvider, QueryProvider, ThemeProvider } from '@providers'
 import { Toaster } from '@shadcn'
-import 'react-medium-image-zoom/dist/styles.css'
 
 import './globals.css'
 
@@ -31,9 +30,11 @@ export default function RootLayout({
 					<QueryProvider>
 						<AuthProvider />
 
-						<NavigationMenuDemo />
+						<Header />
 
-						<main>{children}</main>
+						<BgEffects />
+
+						<main className='flex-1'>{children}</main>
 
 						<Toaster position='top-center' />
 						<Footer />
