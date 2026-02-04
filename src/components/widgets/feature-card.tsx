@@ -11,7 +11,7 @@ interface IProps extends ComponentProps<'div'> {
 export const FeatureCard: FC<IProps> = ({ icon: Icon, title, description, ...props }) => {
 	return (
 		<div
-			className='p-8 rounded-[2rem] bg-card/20 border border-white/5 hover:border-primary/20 transition-colors group'
+			className='p-8 rounded-[2rem] bg-card/20 border border-accent-foreground/5 hover:border-primary/20 transition-colors group'
 			{...props}
 		>
 			<div className='w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform'>

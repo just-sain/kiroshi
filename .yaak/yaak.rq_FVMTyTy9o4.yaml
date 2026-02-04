@@ -1,0 +1,26 @@
+type: http_request
+model: http_request
+id: rq_FVMTyTy9o4
+createdAt: 2026-02-04T15:06:35.226963200
+updatedAt: 2026-02-04T15:12:36.544040400
+workspaceId: wk_tiRfBL6sjU
+folderId: fl_onNSpw8PaT
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers:
+- enabled: true
+  name: ''
+  value: ''
+  id: zNeNqtucpr
+- enabled: true
+  name: ''
+  value: ''
+  id: waJNZczYyu
+method: GET
+name: ''
+sortPriority: 0.0
+url: ${[ strapi_api ]}/api/main?populate=*
+urlParameters: []

@@ -1,5 +1,5 @@
 import type { INav } from '@types'
-import { Headset, LibraryBig } from 'lucide-react'
+import { Award, Gamepad, Headset, LibraryBig } from 'lucide-react'
 
 export const NAVIGATION_DATA: INav[] = [
 	{
@@ -9,24 +9,29 @@ export const NAVIGATION_DATA: INav[] = [
 	{
 		title: 'Портфолио',
 		url: '/portfolio',
-		items: [
-			{
-				icon: LibraryBig,
-				title: 'Инженерное портфолио',
-				url: '/portfolio/engineer',
-				description: 'Инженерные портфолио нашей команды',
-			},
-		],
 	},
 	{
-		title: 'Обучающие курсы',
-		url: '/courses',
+		title: 'Проекты',
+		url: '/projects',
 		items: [
 			{
 				icon: LibraryBig,
-				title: 'ПУСТО',
-				url: '/courses',
-				description: 'Пока тут пусто',
+				title: 'Все наши проекты',
+				url: '/projects',
+				description: 'Просмотрите все наши проекты',
+			},
+			{
+				icon: LibraryBig,
+				title: 'Обучающие курсы',
+				url: '/projects/courses',
+				description: 'Курсы от нашей команды для обучения в FTC',
+			},
+			{
+				icon: Gamepad,
+				title: 'ATC SIM',
+				url: '/projects/atc',
+				description:
+					'Полноценный симулятор FTC робота. Оттачивай навыки управления, тестируй автономные периоды и изучай механику текущего сезона в цифровой среде.',
 			},
 		],
 	},
@@ -39,6 +44,12 @@ export const NAVIGATION_DATA: INav[] = [
 				title: 'О нашей команде',
 				url: '/about',
 				description: 'Узнай подробнее о нашей команде',
+			},
+			{
+				icon: Award,
+				title: 'Наши достижения',
+				url: '/about/awards',
+				description: 'Достижения нашей команды',
 			},
 			{
 				icon: LibraryBig,

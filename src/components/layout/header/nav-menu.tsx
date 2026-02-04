@@ -11,6 +11,7 @@ import {
 	NavigationMenuTrigger,
 	navigationMenuTriggerStyle,
 } from '@shadcn'
+import type { LucideIcon } from 'lucide-react'
 
 export const NavMenu = ({ ...props }: ComponentProps<typeof NavigationMenu>) => {
 	return (
@@ -35,7 +36,7 @@ const NavigationItem = ({ nav }: { nav: (typeof NAVIGATION_DATA)[number] }) => {
 				<NavigationMenuContent>
 					<ul className='grid w-100 gap-3 p-4 md:w-125 md:grid-cols-2 lg:w-150'>
 						{nav.items.map((item) => (
-							<ListItem key={item.title} href={item.url} title={item.title}>
+							<ListItem key={item.title} Icon={item.icon} href={item.url} title={item.title}>
 								{item.description}
 							</ListItem>
 						))}
@@ -62,8 +63,8 @@ const NavigationItem = ({ nav }: { nav: (typeof NAVIGATION_DATA)[number] }) => {
 
 const ListItem = forwardRef<
 	React.ComponentRef<typeof NavigationMenuLink>,
-	React.ComponentPropsWithoutRef<typeof NavigationMenuLink> & { title: string }
->(({ className, title, children, href, ...props }, ref) => {
+	React.ComponentPropsWithoutRef<typeof NavigationMenuLink> & { title: string; Icon: LucideIcon }
+>(({ className, title, Icon, children, href, ...props }, ref) => {
 	return (
 		<li>
 			<NavigationMenuLink
@@ -78,7 +79,9 @@ const ListItem = forwardRef<
 				href={href || '#'}
 				{...props}
 			>
-				<div className='text-sm font-medium leading-none'>{title}</div>
+				<div className='text-sm font-medium leading-none'>
+					<Icon className='inline' /> {title}
+				</div>
 				<p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>{children}</p>
 			</NavigationMenuLink>
 		</li>

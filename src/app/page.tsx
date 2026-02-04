@@ -4,18 +4,35 @@ import * as React from 'react'
 
 import Link from 'next/link'
 
-import { cn } from '@lib'
-import { Carousel, type CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@shadcn'
+import { cn, getMedia } from '@lib'
+import { services } from '@services'
+import {
+	Carousel,
+	type CarouselApi,
+	CarouselContent,
+	CarouselItem,
+	CarouselNext,
+	CarouselPrevious,
+	Spinner,
+} from '@shadcn'
+import { useQuery } from '@tanstack/react-query'
 import { InfoCard } from '@widgets'
 import { ArrowUpRight, Bot, Image as ImageIcon, MessageCircleQuestion, Phone, PlayCircle, Rocket } from 'lucide-react'
 
 import { HeroSection } from './sections/hero'
 
 export default function HomePage() {
+	const { data, isLoading } = useQuery({ ...services.page.getMainOptions(), enabled: true })
+
+	if (isLoading || !data) return <Spinner />
+	console.log(data)
+
+	console.log(getMedia(data.scroller[0].formats.medium.url))
+
 	return (
 		<div className='min-h-screen text-foreground overflow-x-hidden'>
 			<div className='relative container mx-auto px-4 py-12 space-y-24'>
-				<HeroSection />
+				<HeroSection images={data.scroller} />
 
 				{/* --- 2. INFO CARDS SECTION --- */}
 				<section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
@@ -31,7 +48,7 @@ export default function HomePage() {
 
 				{/* --- NEW SECTION: LATEST NEWS --- */}
 				<section className='space-y-12'>
-					<div className='flex items-end justify-between border-b border-white/10 pb-6'>
+					<div className='flex items-end justify-between border-b border-accent-foreground/10 pb-6'>
 						<div className='space-y-2'>
 							<span className='text-primary font-bold tracking-[0.2em] text-xs uppercase'>Stay Updated</span>
 							<h2 className='text-4xl font-black uppercase tracking-tighter'>Последние новости</h2>
@@ -50,7 +67,7 @@ export default function HomePage() {
 							category='Симулятор'
 							date='03 Фев, 2026'
 							description='Мы создали наш симулятор! Создание физика манипуляторов и добавлена поддержка новых элементов.'
-							image='/projects/games/atc/atc.png'
+							image='/projects/atc/atc.png'
 							link='/projects/atc'
 							title='Новый симулятор ATC SIM для сезона DECODE!'
 						/>
@@ -84,10 +101,10 @@ export default function HomePage() {
 			{/* Floating Widget (KapAI) */}
 			<div className='fixed bottom-12 right-6 lg:right-12 flex flex-col items-center gap-2 z-10'>
 				<div className='relative group cursor-pointer'>
-					<div className='absolute inset-0 bg-white/20 rounded-full blur-lg group-hover:bg-white/30 transition-all' />
-					<div className='relative h-14 w-14 bg-black border border-white/20 rounded-full flex items-center justify-center overflow-hidden'>
-						<div className='absolute w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent rotate-45 animate-pulse' />
-						<Bot className='h-6 w-6 text-white' />
+					<div className='absolute inset-0 bg-accent-foreground/20 rounded-full blur-lg group-hover:bg-accent-foreground/30 transition-all' />
+					<div className='relative h-14 w-14 bg-black border border-accent-foreground/20 rounded-full flex items-center justify-center overflow-hidden'>
+						<div className='absolute w-full h-1 bg-linear-to-r from-transparent via-red-500 to-transparent rotate-45 animate-pulse' />
+						<Bot className='h-6 w-6 text-accent-foreground' />
 					</div>
 				</div>
 				<span className='text-xs font-bold tracking-widest uppercase'>KapAI</span>
@@ -100,10 +117,10 @@ export default function HomePage() {
 function NewsCard({ title, description, date, category, image, link, isVideo = false }) {
 	return (
 		<Link
-			className='group relative flex flex-col sm:flex-row gap-6 p-6 rounded-[2rem] bg-card/30 border border-white/10 backdrop-blur-md hover:bg-card/50 hover:border-primary/30 transition-all duration-500'
+			className='group relative flex flex-col sm:flex-row gap-6 p-6 rounded-[2rem] bg-card/30 border border-whiaccent-foregroundte/10 backdrop-blur-md hover:bg-card/50 hover:border-primary/30 transition-all duration-500'
 			href={link}
 		>
-			<div className='relative h-48 sm:h-auto sm:w-52 shrink-0 rounded-2xl overflow-hidden border border-white/5'>
+			<div className='relative h-48 sm:h-auto sm:w-52 shrink-0 rounded-2xl overflow-hidden border border-accent-foreground/5'>
 				<img
 					alt={title}
 					className='object-cover group-hover:scale-105 transition-transform duration-700'
@@ -111,7 +128,7 @@ function NewsCard({ title, description, date, category, image, link, isVideo = f
 				/>
 				{isVideo && (
 					<div className='absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors'>
-						<PlayCircle className='w-12 h-12 text-white/80 group-hover:text-primary group-hover:scale-110 transition-all' />
+						<PlayCircle className='w-12 h-12 text-accent-foreground/80 group-hover:text-primary group-hover:scale-110 transition-all' />
 					</div>
 				)}
 			</div>
@@ -176,7 +193,7 @@ function CustomCarousel() {
 					{KAP_SERIES_VIDEOS.map((videoId, index) => (
 						<CarouselItem key={videoId}>
 							<div className='p-1'>
-								<div className='bg-[#0a0a0a] border border-white/10 aspect-video rounded-3xl flex items-center justify-center relative overflow-hidden group shadow-2xl'>
+								<div className='bg-[#0a0a0a] border border-accent-foreground/10 aspect-video rounded-3xl flex items-center justify-center relative overflow-hidden group shadow-2xl'>
 									<iframe
 										allowFullScreen
 										allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
@@ -189,8 +206,8 @@ function CustomCarousel() {
 						</CarouselItem>
 					))}
 				</CarouselContent>
-				<CarouselPrevious className='hidden lg:flex -left-12 border-white/10 bg-black/50 backdrop-blur-md hover:bg-primary hover:text-white transition-all' />
-				<CarouselNext className='hidden lg:flex -right-12 border-white/10 bg-black/50 backdrop-blur-md hover:bg-primary hover:text-white transition-all' />
+				<CarouselPrevious className='hidden lg:flex -left-12 border-accent-foreground/10 bg-black/50 backdrop-blur-md hover:bg-primary hover:text-accent-foreground transition-all' />
+				<CarouselNext className='hidden lg:flex -right-12 border-accent-foreground/10 bg-black/50 backdrop-blur-md hover:bg-primary hover:text-accent-foreground transition-all' />
 			</Carousel>
 
 			{/* Кастомная пагинация */}
@@ -203,7 +220,7 @@ function CustomCarousel() {
 							'h-1.5 transition-all duration-300 rounded-full',
 							current === index + 1
 								? 'bg-primary w-8 shadow-[0_0_10px_rgba(var(--primary),0.5)]'
-								: 'bg-white/20 w-3 hover:bg-white/40',
+								: 'bg-accent-foreground/20 w-3 hover:bg-accent-foreground/40',
 						)}
 						onClick={() => api?.scrollTo(index)}
 					/>

@@ -1,2 +1,2 @@
-export * from './axios'
+export * from './strapi'
 export * from './utils'

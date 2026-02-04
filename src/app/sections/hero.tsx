@@ -1,42 +1,40 @@
+import type { FC } from 'react'
+
 import Image from 'next/image'
 
+import { getMedia } from '@lib'
 import { Button } from '@shadcn'
+import type { IMediaResponse } from '@types'
 import { BookOpen, ChevronLeft, ChevronRight } from 'lucide-react'
 
-const HERO_IMAGES = [
-	'/hero/1.jpg',
-	'/hero/2.jpg',
-	'/hero/3.jpg',
-	'/hero/4.jpg',
-	'/hero/5.jpg',
-	'/hero/6.jpg',
-	'/hero/7.jpg',
-]
+interface IProps {
+	images: IMediaResponse[]
+}
 
-export const HeroSection = () => {
+export const HeroSection: FC<IProps> = ({ images }) => {
 	return (
 		<section className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center overflow-hidden'>
 			{/* Левая часть: Бесконечно крутящаяся сетка */}
-			<div className='relative h-[600px] overflow-hidden group'>
+			<div className='relative h-150 overflow-hidden group'>
 				{/* Градиентные маски для мягкого исчезновения краев */}
-				<div className='absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-background to-transparent z-10' />
-				<div className='absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent z-10' />
+				<div className='absolute inset-x-0 top-0 h-20 bg-linear-to-b from-background to-transparent z-10' />
+				<div className='absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-background to-transparent z-10' />
 
-				<div className='border border-white/10 rounded-[2.5rem] p-4 bg-card/30 backdrop-blur-sm h-full overflow-hidden'>
+				<div className='border border-accent-foreground/10 rounded-[2.5rem] p-4 bg-card/30 backdrop-blur-sm h-full overflow-hidden'>
 					<div className='grid grid-cols-2 gap-4 h-full'>
 						{/* Первая колонка */}
 						<div className='flex flex-col gap-4 animate-infinite-scroll-slow'>
-							{[...HERO_IMAGES, ...HERO_IMAGES].map((src, i) => (
+							{images.map((src, i) => (
 								<div
 									key={`col1-${i}`}
-									className='relative aspect-[3/4] w-full shrink-0 rounded-2xl overflow-hidden border border-white/5'
+									className='relative aspect-3/4 w-full shrink-0 rounded-2xl overflow-hidden border border-accent-foreground/5'
 								>
 									<Image
 										fill
 										alt='Robotics work'
 										className='object-cover hover:scale-110 transition-transform duration-700'
 										sizes='(max-width: 768px) 50vw, 25vw'
-										src={src}
+										src={getMedia(src.formats.small.url)}
 									/>
 								</div>
 							))}
@@ -44,17 +42,17 @@ export const HeroSection = () => {
 
 						{/* Вторая колонка (с другой скоростью) */}
 						<div className='flex flex-col gap-4 animate-infinite-scroll-fast mt-12'>
-							{[...HERO_IMAGES, ...HERO_IMAGES].reverse().map((src, i) => (
+							{images.reverse().map((src, i) => (
 								<div
 									key={`col2-${i}`}
-									className='relative aspect-[3/4] w-full shrink-0 rounded-2xl overflow-hidden border border-white/5'
+									className='relative aspect-3/4 w-full shrink-0 rounded-2xl overflow-hidden border border-accent-foreground/5'
 								>
 									<Image
 										fill
 										alt='Robotics work'
 										className='object-cover hover:scale-110 transition-transform duration-700'
 										sizes='(max-width: 768px) 50vw, 25vw'
-										src={src}
+										src={getMedia(src.formats.medium.url)}
 									/>
 								</div>
 							))}
@@ -87,7 +85,7 @@ export const HeroSection = () => {
 						ПРИСОЕДИНИТЬСЯ
 					</Button>
 					<Button
-						className='rounded-full px-8 bg-transparent border-white/20 hover:bg-white/5'
+						className='rounded-full px-8 bg-transparent border-accent-foreground/20 hover:bg-accent-foreground/5'
 						size='lg'
 						variant='outline'
 					>
@@ -96,7 +94,7 @@ export const HeroSection = () => {
 				</div>
 
 				{/* Блок с курсами */}
-				<div className='flex items-center gap-4 mt-8 p-4 bg-white/5 border border-white/10 rounded-2xl max-w-md'>
+				<div className='flex items-center gap-4 mt-8 p-4 bg-accent-foreground/5 border border-accent-foreground/10 rounded-2xl max-w-md'>
 					<div className='p-3 bg-primary/10 border border-primary/20 rounded-xl'>
 						<BookOpen className='w-6 h-6 text-primary' />
 					</div>

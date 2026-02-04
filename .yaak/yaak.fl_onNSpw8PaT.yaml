@@ -1,0 +1,21 @@
+type: folder
+model: folder
+id: fl_onNSpw8PaT
+createdAt: 2026-02-04T15:07:53.884190900
+updatedAt: 2026-02-04T15:08:25.098613400
+workspaceId: wk_tiRfBL6sjU
+folderId: null
+authentication: {}
+authenticationType: null
+description: ''
+headers:
+- enabled: true
+  name: Authorization
+  value: 21068c66e18a352834c3cf91397248a4e25962641123bd3a4c7ac66ce734645514b01cf35727f122f2b97622d3283b922ea177eed92b8e68d666c10edeb45ef95cc9ec888d9d4b3575becf1698f0c3dc30e76ba20f31bfa4266565dbb6035f4554aedd65d864b3f4dad2c727150d47254b35a8e630067192e065657ff7a724b3
+  id: DDGZ4drXnq
+- enabled: true
+  name: ''
+  value: ''
+  id: ZItXZtmHES
+name: strapi
+sortPriority: -1770217673880.0

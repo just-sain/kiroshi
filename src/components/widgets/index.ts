@@ -1,5 +1,6 @@
 export * from './author-badge'
 export * from './feature-card'
 export * from './info-card'
+export * from './liquid-pagination'
 export * from './logotype'
 export * from './theme-toggle'

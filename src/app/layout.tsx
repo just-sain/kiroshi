@@ -34,7 +34,7 @@ export default function RootLayout({
 
 						<BgEffects />
 
-						<main className='flex-1'>{children}</main>
+						<main className='flex-1 flex items-center justify-center w-full'>{children}</main>
 
 						<Toaster position='top-center' />
 						<Footer />

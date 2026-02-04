@@ -1,0 +1,15 @@
+type: workspace
+model: workspace
+id: wk_tiRfBL6sjU
+createdAt: 2026-02-04T15:06:18.733839500
+updatedAt: 2026-02-04T15:06:18.733866600
+authentication: {}
+authenticationType: null
+description: ''
+headers: []
+name: kiroshi
+encryptionKeyChallenge: null
+settingValidateCertificates: true
+settingFollowRedirects: true
+settingRequestTimeout: 0
+settingDnsOverrides: []

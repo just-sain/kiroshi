@@ -46,10 +46,63 @@ export interface INav {
 	url: string
 	role?: RoleEnum
 	items?: {
-		icon?: LucideIcon
+		icon: LucideIcon
 		title: string
 		description: string
 		url: string
 		role?: RoleEnum
 	}[]
+}
+
+// generic response
+export interface IStrapiResponse<T> {
+	data: T
+	meta: {
+		pagination?: {
+			page: number
+			pageSize: number
+			pageCount: number
+			total: number
+		}
+	}
+}
+
+// IMediaResponse
+export interface IMediaResponse {
+	id: number
+	documentId: string
+	name: string
+	width: number
+	height: number
+	formats: IImageFormatsResponse
+	hash: string
+	ext: string
+	mime: string
+	size: number
+	url: string
+	provider: string
+	createdAt: string
+	updatedAt: string
+	publishedAt: string
+}
+
+// formats
+export interface IImageFormatsResponse {
+	thumbnail: IImageResponse
+	small: IImageResponse
+	large: IImageResponse
+	medium: IImageResponse
+}
+
+// image interface
+export interface IImageResponse {
+	name: string
+	hash: string
+	ext: string
+	mime: string
+	width: number
+	height: number
+	size: number
+	sizeInBytes: number
+	url: string
 }
