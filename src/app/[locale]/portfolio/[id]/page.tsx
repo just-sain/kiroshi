@@ -1,6 +1,6 @@
 'use client'
 
-import { use } from 'react'
+import React, { use } from 'react'
 
 import { useRouter } from 'next/navigation'
 
@@ -10,11 +10,11 @@ import { Button, Spinner } from '@shadcn'
 import { useQuery } from '@tanstack/react-query'
 import { Calendar, ChevronLeft, Download, ExternalLink, FileText, Trophy } from 'lucide-react'
 
-interface PageProps {
-	params: Promise<{ id: string }>
-}
+const PortfolioDetailPage = ({ params }: { params: Promise<{ id: string; locale: string }> }) => {
+	const { locale } = React.use(params)
 
-const PortfolioDetailPage = ({ params }: PageProps) => {
+	// const dict = useDictionaryStore((state) => state.dict) as IDict
+
 	const { id } = use(params)
 	const router = useRouter()
 
@@ -23,7 +23,7 @@ const PortfolioDetailPage = ({ params }: PageProps) => {
 		isLoading,
 		error,
 	} = useQuery({
-		...services.portfolio.getPortfolioByDocumentIdOption(id),
+		...services.portfolio.getPortfolioByDocumentIdOption(id, locale),
 	})
 
 	if (isLoading)
