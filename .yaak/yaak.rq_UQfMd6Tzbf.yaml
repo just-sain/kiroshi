@@ -1,8 +1,8 @@
 type: http_request
 model: http_request
-id: rq_FVMTyTy9o4
-createdAt: 2026-02-04T15:06:35.226963200
-updatedAt: 2026-02-05T12:43:33.186622800
+id: rq_UQfMd6Tzbf
+createdAt: 2026-02-05T11:36:03.570156500
+updatedAt: 2026-02-05T12:43:33.207010300
 workspaceId: wk_tiRfBL6sjU
 folderId: fl_onNSpw8PaT
 authentication: {}
@@ -20,19 +20,19 @@ headers:
   value: ''
   id: waJNZczYyu
 method: GET
-name: models
-sortPriority: 1000.0
-url: ${[ strapi_api ]}/api/models?populate=*
+name: portfolio by id
+sortPriority: 4000.0
+url: ${[ strapi_api ]}/api/portfolios/:documentId
 urlParameters:
 - enabled: true
-  name: pagination[page]
-  value: '1'
-  id: 7BY4r6bfGw
+  name: :documentId
+  value: qv0inc22w5tknd18bytq7m81
+  id: TNP2PkFhYz
 - enabled: true
-  name: pagination[pageSize]
-  value: '10'
-  id: 5GZtdFZuZs
+  name: populate
+  value: '*'
+  id: UV2sSGcCrk
 - enabled: true
   name: ''
   value: ''
-  id: 3w9Tn5axyx
+  id: 6bFiQEJHHa

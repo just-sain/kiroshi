@@ -1,76 +1,69 @@
 import type { INav } from '@types'
-import { Award, Gamepad, Headset, LibraryBig } from 'lucide-react'
+import { Award, Gamepad, LibraryBig } from 'lucide-react'
 
-export const NAVIGATION_DATA: INav[] = [
+export interface INavDict {
+	details: string
+	portfolio: string
+	projects: {
+		title: string
+		all: string
+		allDesc: string
+		courses: string
+		coursesDesc: string
+		sim: string
+		simDesc: string
+	}
+	team: {
+		title: string
+		awards: string
+		awardsDesc: string
+	}
+	support: string
+}
+
+export const getNavigationData = (dict: INavDict): INav[] => [
 	{
-		title: '3D Детали',
+		title: dict.details,
 		url: '/3d',
 	},
 	{
-		title: 'Портфолио',
+		title: dict.portfolio,
 		url: '/portfolio',
 	},
 	{
-		title: 'Проекты',
+		title: dict.projects.title,
 		url: '/projects',
 		items: [
 			{
 				icon: LibraryBig,
-				title: 'Все наши проекты',
+				title: dict.projects.all,
 				url: '/projects',
-				description: 'Просмотрите все наши проекты',
+				description: dict.projects.allDesc,
 			},
 			{
 				icon: LibraryBig,
-				title: 'Обучающие курсы',
+				title: dict.projects.courses,
 				url: '/projects/courses',
-				description: 'Курсы от нашей команды для обучения в FTC',
+				description: dict.projects.coursesDesc,
 			},
 			{
 				icon: Gamepad,
-				title: 'ATC SIM',
+				title: dict.projects.sim,
 				url: '/projects/atc',
-				description:
-					'Полноценный симулятор FTC робота. Оттачивай навыки управления, тестируй автономные периоды и изучай механику текущего сезона в цифровой среде.',
+				description: dict.projects.simDesc,
 			},
 		],
 	},
 	{
-		title: 'Наша команда',
+		title: dict.team.title,
 		url: '/about',
 		items: [
 			{
-				icon: LibraryBig,
-				title: 'О нашей команде',
-				url: '/about',
-				description: 'Узнай подробнее о нашей команде',
-			},
-			{
 				icon: Award,
-				title: 'Наши достижения',
+				title: dict.team.awards,
 				url: '/about/awards',
-				description: 'Достижения нашей команды',
-			},
-			{
-				icon: LibraryBig,
-				title: 'Into The Deep',
-				url: '/about/seasons/into-the-deep',
-				description: 'Сезон Into the Deep 2024-2025',
-			},
-			{
-				icon: LibraryBig,
-				title: 'Текущий сезон',
-				url: '/about/seasons/current',
-				description: 'Сезон 2025-2026',
+				description: dict.team.awardsDesc,
 			},
 		],
-	},
-] as const
-
-export const navFooter = [
-	{
-		title: 'Поддержка',
-		url: '/support',
-		icon: Headset,
 	},
 ]

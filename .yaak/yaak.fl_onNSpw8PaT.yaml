@@ -2,7 +2,7 @@ type: folder
 model: folder
 id: fl_onNSpw8PaT
 createdAt: 2026-02-04T15:07:53.884190900
-updatedAt: 2026-02-04T15:08:25.098613400
+updatedAt: 2026-02-05T12:43:32.454228400
 workspaceId: wk_tiRfBL6sjU
 folderId: null
 authentication: {}
@@ -18,4 +18,4 @@ headers:
   value: ''
   id: ZItXZtmHES
 name: strapi
-sortPriority: -1770217673880.0
+sortPriority: 0.0

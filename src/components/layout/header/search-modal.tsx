@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
-import { NAVIGATION_DATA } from '@constants'
+import { type INavDict, getNavigationData } from '@constants'
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@shadcn'
 import { FileText } from 'lucide-react'
 
@@ -11,9 +11,11 @@ import { FileText } from 'lucide-react'
 interface SearchModalProps {
 	open: boolean
 	onOpenChange: (open: boolean) => void
+	dict: INavDict
 }
 
-export function SearchModal({ open, onOpenChange }: SearchModalProps) {
+export function SearchModal({ open, dict, onOpenChange }: SearchModalProps) {
+	const navData = getNavigationData(dict)
 	const router = useRouter()
 
 	const runCommand = (command: () => void) => {
@@ -28,7 +30,7 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
 				<CommandEmpty>Ничего не найдено.</CommandEmpty>
 
 				{/* Основная навигация */}
-				{NAVIGATION_DATA.map((group) => (
+				{navData.map((group) => (
 					<CommandGroup key={group.title} heading={group.title}>
 						<CommandItem onSelect={() => runCommand(() => router.push(group.url))}>
 							<FileText className='mr-2 h-4 w-4' />

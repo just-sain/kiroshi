@@ -1,0 +1,129 @@
+{
+	"nav": {
+		"details": "3D Details",
+		"portfolio": "Portfolio",
+		"projects": {
+			"title": "Projects",
+			"all": "All our projects",
+			"allDesc": "Browse all of our projects",
+			"courses": "Training courses",
+			"coursesDesc": "Courses from our team to learn FTC",
+			"sim": "ATC SIM",
+			"simDesc": "Full-featured FTC robot simulator..."
+		},
+		"team": {
+			"title": "Our Team",
+			"awards": "Our Achievements",
+			"awardsDesc": "Achievements of our team"
+		},
+		"support": "Support"
+	},
+
+	"hero": {
+		"title_1": "Future of",
+		"title_2": "Technology",
+		"description": "WE ARE TEAM PID & KIROSHI, UNITED BY A PASSION FOR ROBOTICS. WE DESIGN, BUILD, AND PROGRAM THE FUTURE.",
+		"goal": "OUR GOAL IS TO CREATE RELIABLE AND EFFICIENT SOLUTIONS IN THE FIELD OF ROBOTICS.",
+		"button_join": "JOIN US",
+		"button_learn_more": "LEARN MORE",
+		"course_label": "Design Engineer Specialty",
+		"course_desc": "Learning 3D printing and CAD systems"
+	},
+	"info_cards": {
+		"news": {
+			"title": "NEWS & ACHIEVEMENTS",
+			"desc": "Publications about competitions, awards, and events"
+		},
+		"gallery": {
+			"title": "GALLERY",
+			"desc": "Photos/Videos from competitions, labs, and events"
+		},
+		"contacts": {
+			"title": "CONTACTS",
+			"desc": "Information on how to reach us"
+		},
+		"faq": {
+			"title": "FAQ",
+			"desc": "Answers to the most frequently asked questions"
+		}
+	},
+	"latest_news": {
+		"badge": "Stay Updated",
+		"title": "Latest News",
+		"view_all": "VIEW ALL",
+		"read_more": "Read more"
+	},
+	"sections": {
+		"kap_series": "Kap Series"
+	},
+	"common": {
+		"loading": "Loading..."
+	},
+
+	"modelsPage": {
+		"badge": "CAD Library",
+		"title": "Our 3D Models",
+		"description": "A collection of open CAD files from our team.",
+		"search": {
+			"placeholder": "Search model (e.g., Chassis)...",
+			"clearButton": "Clear search",
+			"noResults": "No results found"
+		},
+		"pagination": {
+			"label": "Pages"
+		}
+	},
+
+	"modelDetailPage": {
+		"back": "Back to library",
+
+		"notFound": "Model not found",
+
+		"stats": {
+			"views": "views",
+			"downloads": "downloads",
+			"likes": "likes"
+		},
+
+		"author": {
+			"unknown": "Unknown author"
+		},
+
+		"actions": {
+			"download": "DOWNLOAD MODEL",
+			"like": "LIKE",
+			"liked": "IN FAVORITES",
+			"share": "Share"
+		},
+
+		"info": {
+			"publishedAt": "Published date"
+		}
+	},
+
+	"portfoliosPage": {
+		"badge": "Portfolio",
+
+		"title": {
+			"main": "Our",
+			"accent": "Portfolio"
+		},
+
+		"description": "Engineering notebooks that document our journey.",
+
+		"search": {
+			"placeholder": "Search by season or award...",
+			"clear": "Clear search",
+			"noResults": "Nothing found"
+		},
+
+		"actions": {
+			"view": "VIEW"
+		}
+	},
+
+	"aboutAwardsPage": {
+		"titleOur": "OUR",
+		"titleAwards": "AWARDS"
+	}
+}

@@ -1,15 +1,27 @@
 'use client'
 
-import { type ComponentProps, useEffect, useState } from 'react'
+// Для смены URL
+import { type ComponentProps, type FC, useEffect, useState } from 'react'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@shadcn'
+// Иконка языка
+import { usePathname, useRouter } from 'next/navigation'
+
+// Замените на путь к вашему UI-компоненту
+import type { INavDict } from '@constants'
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@shadcn'
 import { ThemeToggle } from '@widgets'
-import { Search } from 'lucide-react'
+import { Languages, Search } from 'lucide-react'
 
 import { SearchModal } from './search-modal'
 
-export const NavActions = ({ ...props }: ComponentProps<'div'>) => {
+interface IProps extends ComponentProps<'div'> {
+	dict: INavDict
+}
+
+export const NavActions: FC<IProps> = ({ dict, ...props }) => {
 	const [open, setOpen] = useState(false)
+	const router = useRouter()
+	const pathname = usePathname()
 
 	useEffect(() => {
 		const down = (e: KeyboardEvent) => {
@@ -23,6 +35,13 @@ export const NavActions = ({ ...props }: ComponentProps<'div'>) => {
 
 		return () => document.removeEventListener('keydown', down)
 	}, [])
+
+	const transitionedToLocale = (locale: string) => {
+		const segments = pathname.split('/')
+
+		segments[1] = locale
+		router.push(segments.join('/'))
+	}
 
 	return (
 		<div className='flex gap-4 items-center' {...props}>
@@ -39,12 +58,20 @@ export const NavActions = ({ ...props }: ComponentProps<'div'>) => {
 				</kbd>
 			</button>
 
-			<SearchModal open={open} onOpenChange={setOpen} />
+			<SearchModal dict={dict} open={open} onOpenChange={setOpen} />
 
-			<Avatar className='h-9 w-9 border'>
-				<AvatarImage alt='KIROSHI' src='/logo.svg' />
-				<AvatarFallback>KUP</AvatarFallback>
-			</Avatar>
+			{/* Селектор локали */}
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Button className='h-9 w-9' size='icon' variant='ghost'>
+						<Languages className='h-4 w-4' />
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align='end'>
+					<DropdownMenuItem onClick={() => transitionedToLocale('ru')}>Русский</DropdownMenuItem>
+					<DropdownMenuItem onClick={() => transitionedToLocale('en')}>English</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
 
 			<ThemeToggle />
 		</div>

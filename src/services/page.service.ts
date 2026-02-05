@@ -1,13 +1,8 @@
 import { api } from '@lib'
 import { queryOptions } from '@tanstack/react-query'
-import type { IMediaResponse, IStrapiResponse } from '@types'
+import type { IMediaResponse, ISeriesResponse, IStrapiResponse } from '@types'
 
 // main response
-export interface Series {
-	id: number
-	url: string
-}
-
 interface IMainResponse {
 	id: number
 	documentId: string
@@ -15,16 +10,20 @@ interface IMainResponse {
 	updatedAt: string
 	publishedAt: string
 	scroller: IMediaResponse[]
-	series: Series[]
+	series: ISeriesResponse[]
 }
 
 export class PageService {
 	// get me
-	getMainOptions = () => {
+	getMainOptions = (locale: string) => {
 		return queryOptions({
-			queryKey: ['main'],
+			queryKey: ['main', locale],
 			queryFn: async () => {
-				const { data } = await api.get<IStrapiResponse<IMainResponse> | null>('/api/main')
+				const { data } = await api.get<IStrapiResponse<IMainResponse> | null>('/api/main', {
+					params: {
+						locale: locale,
+					},
+				})
 
 				if (!data) {
 					return null

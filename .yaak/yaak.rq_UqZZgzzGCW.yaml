@@ -1,8 +1,8 @@
 type: http_request
 model: http_request
-id: rq_FVMTyTy9o4
-createdAt: 2026-02-04T15:06:35.226963200
-updatedAt: 2026-02-05T12:43:33.186622800
+id: rq_UqZZgzzGCW
+createdAt: 2026-02-05T11:54:52.948297700
+updatedAt: 2026-02-05T12:43:33.214097900
 workspaceId: wk_tiRfBL6sjU
 folderId: fl_onNSpw8PaT
 authentication: {}
@@ -20,9 +20,9 @@ headers:
   value: ''
   id: waJNZczYyu
 method: GET
-name: models
-sortPriority: 1000.0
-url: ${[ strapi_api ]}/api/models?populate=*
+name: events
+sortPriority: 5000.0
+url: ${[ strapi_api ]}/api/events?populate=*
 urlParameters:
 - enabled: true
   name: pagination[page]
@@ -35,4 +35,4 @@ urlParameters:
 - enabled: true
   name: ''
   value: ''
-  id: 3w9Tn5axyx
+  id: 9U0PExCpm7

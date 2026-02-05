@@ -1,6 +1,6 @@
-import { type ComponentProps, forwardRef } from 'react'
+import { type ComponentProps, type FC, forwardRef } from 'react'
 
-import { NAVIGATION_DATA } from '@constants'
+import { type INavDict, getNavigationData } from '@constants'
 import { cn } from '@lib'
 import {
 	NavigationMenu,
@@ -13,11 +13,17 @@ import {
 } from '@shadcn'
 import type { LucideIcon } from 'lucide-react'
 
-export const NavMenu = ({ ...props }: ComponentProps<typeof NavigationMenu>) => {
+interface IProps extends ComponentProps<typeof NavigationMenu> {
+	dict: INavDict
+}
+
+export const NavMenu: FC<IProps> = ({ dict, ...props }) => {
+	const navData = getNavigationData(dict)
+
 	return (
 		<NavigationMenu {...props}>
 			<NavigationMenuList>
-				{NAVIGATION_DATA.map((nav) => (
+				{navData.map((nav) => (
 					<NavigationItem key={nav.url} nav={nav} />
 				))}
 			</NavigationMenuList>
@@ -25,7 +31,7 @@ export const NavMenu = ({ ...props }: ComponentProps<typeof NavigationMenu>) => 
 	)
 }
 
-const NavigationItem = ({ nav }: { nav: (typeof NAVIGATION_DATA)[number] }) => {
+const NavigationItem = ({ nav }: { nav }) => {
 	if (nav.items && nav.items.length > 0) {
 		return (
 			<NavigationMenuItem>
