@@ -10,19 +10,7 @@ import { Button, Spinner } from '@shadcn'
 import { useDictionaryStore } from '@store'
 import { useQuery } from '@tanstack/react-query'
 import { LiquidPagination } from '@widgets'
-import {
-	Download,
-	Eye,
-	FileText,
-	GraduationCap,
-	type LucideIcon,
-	PenTool,
-	Search,
-	Star,
-	Trophy,
-	X,
-	Zap,
-} from 'lucide-react'
+import { Eye, FileText, GraduationCap, type LucideIcon, PenTool, Search, Star, Trophy, X, Zap } from 'lucide-react'
 
 const AWARD_ICONS: Record<string, LucideIcon> = {
 	inspire: Trophy,
@@ -231,16 +219,6 @@ const PortfoliosPage = ({ params }: { params: Promise<{ locale: string }> }) => 
 											<div className='flex gap-3 pt-4 mt-auto'>
 												<Button className='flex-1 h-12 rounded-xl font-bold gap-2 shadow-[0_10px_20px_-10px_var(--primary)] pointer-events-none'>
 													<Eye className='w-4 h-4' /> {p.actions.view}
-												</Button>
-												<Button
-													className='w-12 h-12 rounded-xl border-white/10 bg-white/5 hover:bg-white/10 p-0 pointer-events-auto z-20'
-													variant='outline'
-													onClick={(e) => {
-														e.preventDefault()
-														// Логика скачивания
-													}}
-												>
-													<Download className='w-4 h-4 text-primary' />
 												</Button>
 											</div>
 										</div>

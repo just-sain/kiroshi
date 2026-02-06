@@ -14,7 +14,11 @@
 		"team": {
 			"title": "Our Team",
 			"awards": "Our Achievements",
-			"awardsDesc": "Achievements of our team"
+			"awardsDesc": "Achievements of our team",
+			"news": "News",
+			"newsDesc": "Last news of our team",
+			"gallery": "Gallery",
+			"galleryDesc": "Check out gallery!"
 		},
 		"support": "Support"
 	},
@@ -36,11 +40,11 @@
 		},
 		"gallery": {
 			"title": "GALLERY",
-			"desc": "Photos/Videos from competitions, labs, and events"
+			"desc": "PAGE UNDER DEVELOPMENT: Photos/Videos from competitions, laboratories, and events"
 		},
 		"contacts": {
 			"title": "CONTACTS",
-			"desc": "Information on how to reach us"
+			"desc": "Answers to the most frequently asked questions: There are no words"
 		},
 		"faq": {
 			"title": "FAQ",
@@ -52,6 +56,39 @@
 		"title": "Latest News",
 		"view_all": "VIEW ALL",
 		"read_more": "Read more"
+	},
+	"projects": {
+		"badge": "PID & KIROSHI Ecosystem",
+		"title": "Our Projects",
+		"description": "Innovation, education, and software for competitive robotics",
+		"more": "EXPLORE PROJECT",
+		"empty": "No projects available yet.",
+
+		"version": "Version",
+		"platform": "Platform",
+		"weight": "Weight",
+		"download": "Download",
+		"documentation": "Documentation",
+		"physicTitle": "Realistic physics",
+		"configTitle": "Robot setup",
+		"moreThanTitle": "More than just a game",
+		"screenshots": "Screenshots",
+
+		"features": {
+			"physicTitle": "Precise physics",
+			"physicDesc": "Realistic robot behavior in the field, taking into account wheel friction, manipulator weight, and inertia.",
+			"infoTitle": "Current season",
+			"infoDesc": "The field and game elements are fully compliant with the current FTC season.",
+			"downloadTitle": "Community Driven",
+			"downloadDesc": "We support the community, so the simulator is available free of charge to all teams."
+		}
+	},
+	"courses": {
+		"badge": "Educational Program",
+		"title": "Course on",
+		"titleAccent": "FTC Robotics",
+		"description": "A step-by-step guide from design to competition victory. Learn theory and apply it in a simulator or on hardware.",
+		"lesson": "Lesson"
 	},
 	"sections": {
 		"kap_series": "Kap Series"
@@ -120,6 +157,17 @@
 		"actions": {
 			"view": "VIEW"
 		}
+	},
+
+	"portfolioDetailPage": {
+		"back": "Back to library",
+		"notFound": "Portfolio is not found",
+		"readPdf": "Read PDF",
+		"season": "season",
+		"seasonNotFound": "Не указано",
+		"documentType": "Portfolio type",
+		"descriptionTitle": "Project description",
+		"download": "Download PDF"
 	},
 
 	"aboutAwardsPage": {

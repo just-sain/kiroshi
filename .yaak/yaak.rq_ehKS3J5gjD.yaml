@@ -1,8 +1,8 @@
 type: http_request
 model: http_request
-id: rq_UqZZgzzGCW
-createdAt: 2026-02-05T11:54:52.948297700
-updatedAt: 2026-02-05T21:22:05.825946800
+id: rq_ehKS3J5gjD
+createdAt: 2026-02-05T21:49:39.342588100
+updatedAt: 2026-02-05T21:51:20.367544900
 workspaceId: wk_tiRfBL6sjU
 folderId: fl_onNSpw8PaT
 authentication: {}
@@ -20,19 +20,15 @@ headers:
   value: ''
   id: waJNZczYyu
 method: GET
-name: events
-sortPriority: 9000.0
-url: ${[ strapi_api ]}/api/events?populate=*
+name: courses page
+sortPriority: 2000.001
+url: ${[ strapi_api ]}/api/courses?populate=*
 urlParameters:
 - enabled: true
-  name: pagination[page]
-  value: '1'
-  id: 7BY4r6bfGw
-- enabled: true
-  name: pagination[pageSize]
-  value: '10'
-  id: 5GZtdFZuZs
+  name: sort
+  value: order:asc
+  id: Ihk6jBkWDr
 - enabled: true
   name: ''
   value: ''
-  id: 9U0PExCpm7
+  id: qxCP3KK0jT

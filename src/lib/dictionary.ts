@@ -9,9 +9,9 @@ export const getDictionary = async (locale: string) => {
 	const loader = dictionaries[locale as Locale]
 
 	if (typeof loader !== 'function') {
-		console.warn(`Dictionary for locale "${locale}" not found. Falling back to "ru".`)
+		console.warn(`Dictionary for locale "${locale}" not found. Falling back to "en".`)
 
-		return dictionaries.ru()
+		return dictionaries.en()
 	}
 
 	return loader()

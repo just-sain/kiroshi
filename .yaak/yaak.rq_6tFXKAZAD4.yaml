@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_6tFXKAZAD4
 createdAt: 2026-02-05T11:16:42.531233300
-updatedAt: 2026-02-05T12:43:33.193488800
+updatedAt: 2026-02-05T21:22:05.761772400
 workspaceId: wk_tiRfBL6sjU
 folderId: fl_onNSpw8PaT
 authentication: {}
@@ -21,7 +21,7 @@ headers:
   id: waJNZczYyu
 method: GET
 name: model by id
-sortPriority: 2000.0
+sortPriority: 4000.0
 url: ${[ strapi_api ]}/api/models/vv2k6vtejosznkbbhgd2vsyv
 urlParameters:
 - enabled: true

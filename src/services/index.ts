@@ -1,6 +1,7 @@
 import { AuthService } from './auth.service'
 import { AwardsService } from './awards.service'
 import { ModelService } from './model.service'
+import { NewsService } from './news.service'
 import { PageService } from './page.service'
 import { PortfolioService } from './portfolio.service'
 
@@ -11,4 +12,5 @@ export const services = {
 	model: new ModelService(),
 	portfolio: new PortfolioService(),
 	award: new AwardsService(),
+	news: new NewsService(),
 }

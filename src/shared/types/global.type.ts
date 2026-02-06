@@ -111,6 +111,7 @@ export interface IImageResponse {
 export interface IAuthor {
 	id: number
 	documentId: string
+	role: string
 	name: string
 	email: string
 	description: string
@@ -130,6 +131,7 @@ export interface IModelResponse {
 	id: number
 	documentId: string
 	name: string
+	tag: string
 	description: string
 	downloadCount: number
 	likeCount: number
@@ -137,10 +139,9 @@ export interface IModelResponse {
 	updatedAt: string
 	publishedAt: string
 	locale: string
-	model: string
+	model: IMediaResponse
 	author: IAuthor
 	poster: IMediaResponse
-	localizations: IModelResponse[]
 }
 
 // portfolio
@@ -148,14 +149,15 @@ export interface IPortfolioResponse {
 	id: number
 	documentId: string
 	name: string
+	type: string
 	description: string
 	createdAt: string
 	updatedAt: string
 	publishedAt: string
+	portfolio: IMediaResponse
 	locale: string
 	poster: IMediaResponse
 	event: IEventResponse
-	localizations: IPortfolioResponse[]
 }
 
 // event
@@ -197,7 +199,40 @@ export interface IAwardResponse {
 	event: IEventResponse
 }
 
+// series
 export interface ISeriesResponse {
 	id: number
 	url: string
+}
+
+// news
+export interface INewsResponse {
+	id: number
+	documentId: string
+	name: string
+	description: string
+	link: string
+	tag: string
+	date: string
+	createdAt: string
+	updatedAt: string
+	publishedAt: string
+	locale: string
+	poster: IMediaResponse
+}
+
+// projects response
+export interface IProjectsResponse {
+	id: number
+	documentId: string
+	name: string
+	subname: string
+	description: string
+	link: string
+	tags: string
+	createdAt: string
+	updatedAt: string
+	publishedAt: string
+	locale: string
+	poster: IMediaResponse
 }

@@ -5,7 +5,7 @@ import { getDictionary } from '@lib'
 import { AuthProvider, DictionaryProvider, QueryProvider, ThemeProvider } from '@providers'
 import { Toaster } from '@shadcn'
 
-import './globals.css'
+import '../globals.css'
 
 // metadata
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export default async function RootLayout({
 	children: React.ReactNode
 	params: { locale: string }
 }>) {
-	const { locale } = params
+	const { locale } = await params
 	const dict = await getDictionary(locale)
 
 	return (

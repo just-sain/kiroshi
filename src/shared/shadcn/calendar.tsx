@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 
+import { normalizeDate } from '@helpers'
 import { cn } from '@lib'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { type DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker'
@@ -120,7 +121,7 @@ function Calendar({
 				...components,
 			}}
 			formatters={{
-				formatMonthDropdown: (date) => date.toLocaleString('default', { month: 'short' }),
+				formatMonthDropdown: (date) => normalizeDate(date),
 				...formatters,
 			}}
 			showOutsideDays={showOutsideDays}
@@ -146,7 +147,7 @@ function CalendarDayButton({ className, day, modifiers, ...props }: React.Compon
 				defaultClassNames.day,
 				className,
 			)}
-			data-day={day.date.toLocaleDateString()}
+			data-day={normalizeDate(day.date)}
 			data-range-end={modifiers.range_end}
 			data-range-middle={modifiers.range_middle}
 			data-range-start={modifiers.range_start}

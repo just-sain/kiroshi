@@ -1,45 +1,97 @@
 'use client'
 
+import React from 'react'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Button } from '@shadcn'
+import { formatFileSize } from '@helpers'
+import { getMedia } from '@lib'
+import { services } from '@services'
+import { Button, Spinner } from '@shadcn'
+import { useDictionaryStore } from '@store'
+import { useQuery } from '@tanstack/react-query'
 import { AuthorBadge, FeatureCard } from '@widgets'
 import { Download, Gamepad2, Info, Layers } from 'lucide-react'
 
 import { Gallery } from './gallery'
 
-export default function GamePage() {
+// Расширяем словарь для страницы игры
+interface IDict {
+	projects: {
+		more: string
+		download: string
+		documentation: string
+		version: string
+		platform: string
+		weight: string
+		screenshots: string
+		physicTitle: string
+		configTitle: string
+		moreThanTitle: string
+		features: {
+			physicTitle: string
+			physicDesc: string
+			infoTitle: string
+			infoDesc: string
+			downloadTitle: string
+			downloadDesc: string
+		}
+	}
+}
+
+export default function GamePage({ params }: { params: Promise<{ locale: string }> }) {
+	const { locale } = React.use(params)
+	const dict = useDictionaryStore((state) => state.dict) as IDict
+
+	const { data: atc, isLoading } = useQuery({
+		// Предполагаем, что getProjectsOptions возвращает данные типа IAtcResponse
+		...services.page.getAtcOptions(locale),
+		enabled: true,
+	})
+
+	// Защита от отсутствия данных или загрузки
+	if (isLoading || !atc) {
+		return (
+			<div className='min-h-screen flex items-center justify-center'>
+				<Spinner />
+			</div>
+		)
+	}
+
 	return (
-		<div className='min-h-screen text-foreground overflow-x-hidden'>
+		<div className='min-h-screen text-foreground'>
 			<div className='relative container mx-auto px-4 py-12 space-y-28'>
 				{/* --- 1. HERO SECTION --- */}
 				<section className='relative mt-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
-					{/* Изображение проекта */}
+					{/* Изображение проекта из API */}
 					<div className='lg:col-span-7 relative group border border-accent-foreground/10 rounded-[2rem] overflow-hidden bg-card/30 backdrop-blur-md shadow-2xl'>
 						<div className='aspect-video bg-muted/20 relative flex items-center justify-center'>
-							<Image fill alt='ATC' className='object-fill' src='/projects/atc/atc.png' />
+							<Image fill priority alt={atc.name} className='object-cover' src={getMedia(atc.poster.url)} />
 						</div>
 					</div>
 
 					{/* Описание и авторы */}
 					<div className='lg:col-span-5 space-y-8'>
 						<div className='space-y-4'>
-							<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-widest uppercase'>
-								<Gamepad2 className='w-3 h-3' /> Current Season: Decode
-							</div>
-							<h1 className='text-6xl lg:text-8xl font-black tracking-tighter uppercase italic'>
-								ATC <span className='text-primary'>SIM</span>
-							</h1>
-							<p className='text-muted-foreground leading-relaxed text-lg'>
-								Полноценный симулятор FTC робота. Оттачивай навыки управления, тестируй автономные периоды и
-								изучай механику текущего сезона в цифровой среде.
-							</p>
+							{atc.season && (
+								<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-widest uppercase'>
+									<Gamepad2 className='w-3 h-3' />
+									Current Season: {atc.season.name}
+								</div>
+							)}
 
-							{/* БЛОК АВТОРОВ */}
+							<h1 className='text-6xl lg:text-8xl font-black tracking-tighter uppercase italic'>
+								{atc.name.split(' ')[0]} <span className='text-primary'>{atc.name.split(' ')[1]}</span>
+							</h1>
+
+							<p className='text-muted-foreground leading-relaxed text-lg'>{atc.shortDescription}</p>
+
+							{/* АВТОРЫ ИЗ API */}
 							<div className='flex flex-wrap gap-3 pt-2'>
-								<AuthorBadge name='Дмитрий Енин' role='Lead Designer' />
-								<AuthorBadge name='Дорошкевич Даниил' role='Physics & 3D' />
+								{atc.authors?.map((author) => (
+									<AuthorBadge key={author.id} name={author.name} role={author.role} />
+								))}
 							</div>
 						</div>
 
@@ -49,8 +101,9 @@ export default function GamePage() {
 								className='h-16 px-10 rounded-2xl font-bold text-lg shadow-[0_0_30px_-5px_var(--primary)] hover:shadow-[0_0_50px_-5px_var(--primary)] transition-all gap-3 bg-primary hover:bg-primary/90'
 								size='lg'
 							>
-								<Link download='atc-simulation.zip' href='/projects/atc/game.zip'>
-									<Download className='w-6 h-6' /> СКАЧАТЬ ATC
+								<Link download href={getMedia(atc.game.url)}>
+									<Download className='w-6 h-6' />
+									{dict?.projects?.download}
 								</Link>
 							</Button>
 							<Button
@@ -59,90 +112,65 @@ export default function GamePage() {
 								size='lg'
 								variant='outline'
 							>
-								ДОКУМЕНТАЦИЯ
+								{dict?.projects?.documentation}
 							</Button>
 						</div>
 
-						{/* Технические статы */}
+						{/* Технические статы (можно добавить поля в Strapi или оставить статикой, если нет в API) */}
 						<div className='grid grid-cols-3 gap-4 pt-4 border-t border-accent-foreground/5'>
 							<div>
-								<div className='text-[10px] text-muted-foreground uppercase'>Версия</div>
+								<div className='text-[10px] text-muted-foreground uppercase'>{dict?.projects?.version}</div>
 								<div className='font-mono font-bold text-primary'>v0.13.37</div>
 							</div>
 							<div>
-								<div className='text-[10px] text-muted-foreground uppercase'>Платформа</div>
+								<div className='text-[10px] text-muted-foreground uppercase'>{dict?.projects?.platform}</div>
 								<div className='font-mono font-bold'>Windows/PC</div>
 							</div>
 							<div>
-								<div className='text-[10px] text-muted-foreground uppercase'>Вес</div>
-								<div className='font-mono font-bold'>~250 MB</div>
+								<div className='text-[10px] text-muted-foreground uppercase'>{dict?.projects?.weight}</div>
+								<div className='font-mono font-bold'>{formatFileSize(atc.game.size)}</div>
 							</div>
 						</div>
 					</div>
 				</section>
 
-				{/* --- СЕКЦИЯ ПОДРОБНОГО ОПИСАНИЯ (ПОСЛЕ ГАЛЕРЕИ) --- */}
+				{/* --- СЕКЦИЯ ПОДРОБНОГО ОПИСАНИЯ --- */}
 				<section className='relative space-y-16 py-12'>
 					<div className='absolute inset-0 bg-primary/5 blur-[120px] rounded-full -z-10' />
 
 					<div className='max-w-4xl mx-auto text-center space-y-6'>
-						<h2 className='text-3xl lg:text-5xl font-bold uppercase tracking-tight'>
-							ATC — <span className='text-primary'>Artificial Tech Challenge</span>
-						</h2>
-						<p className='text-muted-foreground text-lg leading-relaxed'>
-							ATC — это физически точный симулятор робототехники, который детально воссоздает среду соревнований
-							FTC DECODE. Вы настраиваете и управляете своим роботом на соревновательном поле, где важны каждое
-							движение, столкновение и инженерное решение. Это не просто аркада — всё, что происходит в ATC,
-							следует той же физической логике, которую вы ожидаете на реальном поле FTC.
-						</p>
+						<h2 className='text-3xl lg:text-5xl font-bold uppercase tracking-tight'>{atc.fullName}</h2>
+						<p className='text-muted-foreground text-lg leading-relaxed'>{atc.fullDescription}</p>
 					</div>
 
 					<div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-						{/* Блок: Физика */}
+						{/* Блок: Физика (Graphic/Physics) */}
 						<div className='p-8 rounded-[2rem] bg-card/40 border border-accent-foreground/10 backdrop-blur-md space-y-4'>
 							<h3 className='text-xl font-bold uppercase text-primary flex items-center gap-2'>
 								<div className='w-2 h-2 bg-primary rounded-full animate-pulse' />
-								Реалистичная физика
+								{dict.projects.physicTitle}
 							</h3>
-							<p className='text-muted-foreground leading-relaxed'>
-								ATC построен вокруг продвинутой физической системы. Элементы (шары) имеют реальную массу,
-								отскок, трение и поведение при складывании. Ворота реагируют с правильным импульсом,
-								сопротивлением и чувствительностью к моменту времени. Столкновения естественны и непрерывны. То,
-								что вы видите на поле — это то, что на самом деле произошло бы, если бы вы построили такой же
-								механизм в реальности.
-							</p>
+							<p className='text-muted-foreground leading-relaxed'>{atc.graphicDescription}</p>
 						</div>
 
-						{/* Блок: Кастомизация */}
+						{/* Блок: Кастомизация (Config) */}
 						<div className='p-8 rounded-[2rem] bg-card/40 border border-accent-foreground/10 backdrop-blur-md space-y-4'>
 							<h3 className='text-xl font-bold uppercase text-primary flex items-center gap-2'>
 								<div className='w-2 h-2 bg-primary rounded-full animate-pulse' />
-								Настройка робота
+								{dict.projects.configTitle}
 							</h3>
-							<p className='text-muted-foreground leading-relaxed'>
-								Кастомизация робота в ATC гибкая: вы можете регулировать скорость и вес, чтобы изменить то, как
-								ваш робот ускоряется, поворачивает и ведет себя при контакте. Системы захвата и запуска
-								настраиваются с точным контролем отклика и механических ограничений. Оптимизируете ли вы
-								скорость, точность или экспериментируете — ATC позволяет довести конструкцию до предела и
-								ощутить последствия каждого выбора.
-							</p>
+							<p className='text-muted-foreground leading-relaxed'>{atc.configDescription}</p>
 						</div>
 
-						{/* Блок: Обучение (на всю ширину) */}
+						{/* Блок: Обучение (More Than) */}
 						<div className='lg:col-span-2 p-8 rounded-[2rem] bg-primary/5 border border-primary/20 backdrop-blur-md'>
 							<div className='flex flex-col lg:flex-row gap-8 items-center'>
 								<div className='space-y-4 flex-1'>
 									<h3 className='text-xl font-bold uppercase flex items-center gap-2 text-foreground'>
 										<Info className='w-5 h-5 text-primary' />
-										Больше чем просто игра
+										{dict.projects.moreThanTitle}
 									</h3>
-									<p className='text-muted-foreground leading-relaxed'>
-										ATC — это понимание того, как взаимодействуют физика, механика и системы управления. Вы
-										увидите, как небольшие изменения в конструкции влияют на стабильность и
-										последовательность, как физика усложняет управление и как механические компромиссы
-										приводят к стратегическим решениям на поле. Это делает ATC мощным инструментом для
-										изучения концепций робототехники через практические эксперименты.
-									</p>
+									<p className='text-muted-foreground leading-relaxed'>{atc.moreThanDescription}</p>
 								</div>
 								<div className='hidden lg:block w-px h-24 bg-primary/20' />
 								<div className='flex flex-col items-center justify-center px-8 space-y-2'>
@@ -156,34 +184,33 @@ export default function GamePage() {
 					</div>
 				</section>
 
-				{/* --- 2. ГАЛЕРЕЯ --- */}
+				{/* --- 2. ГАЛЕРЕЯ ИЗ API --- */}
 				<section className='space-y-12'>
 					<div className='flex flex-col items-center text-center space-y-4'>
-						<h2 className='text-4xl font-bold uppercase tracking-tight'>Скриншоты симулятора</h2>
+						<h2 className='text-4xl font-bold uppercase tracking-tight'>{dict?.projects?.screenshots}</h2>
 						<div className='h-1 w-20 bg-primary rounded-full' />
 					</div>
 
-					<Gallery
-						images={['/projects/atc/1.png', '/projects/atc/2.png', '/projects/atc/3.png', '/projects/atc/4.png']}
-					/>
+					<Gallery images={atc.screenshots?.map((img) => getMedia(img.url)) || []} />
 				</section>
 
 				{/* --- 3. ОСОБЕННОСТИ --- */}
+				{/* Оставляем FeatureCards как есть, либо их тоже можно вынести в API при необходимости */}
 				<section className='grid grid-cols-1 md:grid-cols-3 gap-8'>
 					<FeatureCard
-						description='Реалистичное поведение робота на поле, учитывающее трение колес, вес манипуляторов и инерцию.'
+						description={dict.projects.features.physicDesc}
 						icon={Layers}
-						title='Точная физика'
+						title={dict.projects.features.physicTitle}
 					/>
 					<FeatureCard
-						description="Полное соответствие поля и игровых элементов текущему сезону FTC 'Decode'."
+						description={dict.projects.features.infoDesc}
 						icon={Info}
-						title='Актуальный сезон'
+						title={dict.projects.features.infoTitle}
 					/>
 					<FeatureCard
-						description='Мы поддерживаем сообщество, поэтому симулятор доступен бесплатно для всех команд.'
+						description={dict.projects.features.downloadDesc}
 						icon={Download}
-						title='Open Source'
+						title={dict.projects.features.downloadTitle}
 					/>
 				</section>
 			</div>

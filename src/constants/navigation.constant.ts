@@ -1,5 +1,5 @@
 import type { INav } from '@types'
-import { Award, Gamepad, LibraryBig } from 'lucide-react'
+import { Award, GalleryHorizontal, Gamepad, LibraryBig, Newspaper } from 'lucide-react'
 
 export interface INavDict {
 	details: string
@@ -17,6 +17,10 @@ export interface INavDict {
 		title: string
 		awards: string
 		awardsDesc: string
+		news: string
+		newsDesc: string
+		gallery: string
+		galleryDesc: string
 	}
 	support: string
 }
@@ -59,10 +63,22 @@ export const getNavigationData = (dict: INavDict): INav[] => [
 		url: '/about',
 		items: [
 			{
+				icon: Newspaper,
+				title: dict.team.news,
+				url: '/news',
+				description: dict.team.newsDesc,
+			},
+			{
 				icon: Award,
 				title: dict.team.awards,
 				url: '/about/awards',
 				description: dict.team.awardsDesc,
+			},
+			{
+				icon: GalleryHorizontal,
+				title: dict.team.gallery,
+				url: '/about/gallery',
+				description: dict.team.galleryDesc,
 			},
 		],
 	},

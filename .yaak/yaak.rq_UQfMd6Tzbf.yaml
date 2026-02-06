@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_UQfMd6Tzbf
 createdAt: 2026-02-05T11:36:03.570156500
-updatedAt: 2026-02-05T12:43:33.207010300
+updatedAt: 2026-02-05T21:22:05.787495600
 workspaceId: wk_tiRfBL6sjU
 folderId: fl_onNSpw8PaT
 authentication: {}
@@ -21,7 +21,7 @@ headers:
   id: waJNZczYyu
 method: GET
 name: portfolio by id
-sortPriority: 4000.0
+sortPriority: 6000.0
 url: ${[ strapi_api ]}/api/portfolios/:documentId
 urlParameters:
 - enabled: true

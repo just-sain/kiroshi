@@ -34,7 +34,7 @@ export class PortfolioService {
 		})
 	}
 
-	// get model by id
+	// get portfolio by document id
 	getPortfolioByDocumentIdOption = (id: string, locale: string) => {
 		return queryOptions({
 			queryKey: ['portfolio', id, locale],
@@ -45,6 +45,7 @@ export class PortfolioService {
 						populate: undefined,
 						'populate[poster][populate]': '*',
 						'populate[event][populate]': '*',
+						'populate[portfolio][populate]': '*',
 					},
 				})
 

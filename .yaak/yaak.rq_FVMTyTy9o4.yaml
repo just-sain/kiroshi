@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_FVMTyTy9o4
 createdAt: 2026-02-04T15:06:35.226963200
-updatedAt: 2026-02-05T12:43:33.186622800
+updatedAt: 2026-02-05T21:22:05.748934400
 workspaceId: wk_tiRfBL6sjU
 folderId: fl_onNSpw8PaT
 authentication: {}
@@ -21,7 +21,7 @@ headers:
   id: waJNZczYyu
 method: GET
 name: models
-sortPriority: 1000.0
+sortPriority: 3000.0
 url: ${[ strapi_api ]}/api/models?populate=*
 urlParameters:
 - enabled: true

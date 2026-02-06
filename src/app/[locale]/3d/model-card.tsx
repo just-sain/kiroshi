@@ -2,6 +2,7 @@ import type { FC } from 'react'
 
 import Link from 'next/link'
 
+import { formatFileSize } from '@helpers'
 import { getMedia } from '@lib'
 import type { IModelResponse } from '@types'
 import { Box } from 'lucide-react'
@@ -29,8 +30,7 @@ export const ModelCard: FC<IProps> = ({ model }) => {
 
 				<div className='absolute top-4 right-4 z-20'>
 					<span className='rounded-full border border-accent-foreground/10 bg-black/40 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-accent-foreground backdrop-blur-xl'>
-						{/* TODO: do category */}
-						PUSTO
+						{model.tag}
 					</span>
 				</div>
 			</div>
@@ -47,10 +47,7 @@ export const ModelCard: FC<IProps> = ({ model }) => {
 							<span className='font-mono'>STEP</span>
 						</div>
 						<span className='h-3 w-px bg-accent-foreground/10' />
-						<span className='font-mono uppercase'>
-							{/* TODO: file size */}
-							50MB
-						</span>
+						{model.model?.size && <span className='font-mono uppercase'>{formatFileSize(model.model.size)}</span>}
 					</div>
 				</div>
 			</div>

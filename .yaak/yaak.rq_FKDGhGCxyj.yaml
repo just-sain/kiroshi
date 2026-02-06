@@ -1,8 +1,8 @@
 type: http_request
 model: http_request
-id: rq_oL2fbCsRPJ
-createdAt: 2026-02-05T09:42:50.334575700
-updatedAt: 2026-02-05T21:22:05.705152100
+id: rq_FKDGhGCxyj
+createdAt: 2026-02-05T21:22:01.494144200
+updatedAt: 2026-02-05T21:22:13.601934700
 workspaceId: wk_tiRfBL6sjU
 folderId: fl_onNSpw8PaT
 authentication: {}
@@ -20,7 +20,7 @@ headers:
   value: ''
   id: waJNZczYyu
 method: GET
-name: main page
-sortPriority: 0.0
-url: ${[ strapi_api ]}/api/main?populate=*
+name: atc page
+sortPriority: 2000.0
+url: ${[ strapi_api ]}/api/atc?populate=*
 urlParameters: []

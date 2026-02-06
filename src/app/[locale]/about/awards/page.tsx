@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
+import { normalizeDate } from '@helpers'
 import { cn } from '@lib'
 import { services } from '@services'
 import { Spinner } from '@shadcn'
@@ -161,7 +162,7 @@ const AwardsPage = ({ params }: { params: Promise<{ locale: string }> }) => {
 													{award.event.type}
 												</div>
 												<div className='text-[9px] font-bold text-muted-foreground uppercase italic'>
-													{new Date(award.event.date).toLocaleDateString('ru-RU')}
+													{normalizeDate(award.event.date, locale)}
 												</div>
 											</div>
 										</div>

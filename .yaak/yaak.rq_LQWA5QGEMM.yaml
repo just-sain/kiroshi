@@ -2,7 +2,7 @@ type: http_request
 model: http_request
 id: rq_LQWA5QGEMM
 createdAt: 2026-02-05T12:43:28.908307300
-updatedAt: 2026-02-05T12:44:27.592939900
+updatedAt: 2026-02-05T21:22:05.800526500
 workspaceId: wk_tiRfBL6sjU
 folderId: fl_onNSpw8PaT
 authentication: {}
@@ -21,7 +21,7 @@ headers:
   id: waJNZczYyu
 method: GET
 name: awards
-sortPriority: 4333.333333333333
+sortPriority: 7000.0
 url: ${[ strapi_api ]}/api/awards
 urlParameters:
 - enabled: true

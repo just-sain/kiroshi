@@ -4,16 +4,31 @@ import React, { use } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { cn, getMedia } from '@lib'
+import { formatFileSize } from '@helpers'
+import { cn, downloadPhoto, getMedia } from '@lib'
 import { services } from '@services'
 import { Button, Spinner } from '@shadcn'
+import { useDictionaryStore } from '@store'
 import { useQuery } from '@tanstack/react-query'
 import { Calendar, ChevronLeft, Download, ExternalLink, FileText, Trophy } from 'lucide-react'
+
+interface IDict {
+	portfolioDetailPage: {
+		back: string
+		notFound: string
+		readPdf: string
+		season: string
+		seasonNotFound: string
+		documentType: string
+		descriptionTitle: string
+		download: string
+	}
+}
 
 const PortfolioDetailPage = ({ params }: { params: Promise<{ id: string; locale: string }> }) => {
 	const { locale } = React.use(params)
 
-	// const dict = useDictionaryStore((state) => state.dict) as IDict
+	const dict = useDictionaryStore((state) => state.dict) as IDict
 
 	const { id } = use(params)
 	const router = useRouter()
@@ -26,7 +41,7 @@ const PortfolioDetailPage = ({ params }: { params: Promise<{ id: string; locale:
 		...services.portfolio.getPortfolioByDocumentIdOption(id, locale),
 	})
 
-	if (isLoading)
+	if (isLoading || !dict)
 		return (
 			<div className='w-full h-screen flex items-center justify-center'>
 				<Spinner />
@@ -36,14 +51,13 @@ const PortfolioDetailPage = ({ params }: { params: Promise<{ id: string; locale:
 	if (error || !item)
 		return (
 			<div className='w-full h-screen flex flex-col items-center justify-center space-y-4'>
-				<h1 className='text-2xl font-bold'>Портфолио не найдено</h1>
-				<Button onClick={() => router.back()}>Вернуться назад</Button>
+				<h1 className='text-2xl font-bold'>{dict.portfolioDetailPage.notFound}</h1>
+				<Button onClick={() => router.back()}>{dict.portfolioDetailPage.back}</Button>
 			</div>
 		)
 
-	// const fileUrl = item.file?.url ? getMedia(item.file.url) : null
-	const fileUrl = ''
-	const posterUrl = item.poster?.url ? getMedia(item.poster.url) : ''
+	const fileUrl = item.portfolio?.url ? getMedia(item.portfolio.url) : null
+	const posterUrl = item.poster.url ? getMedia(item.poster.url) : ''
 
 	return (
 		<main className='min-h-screen pb-20'>
@@ -54,7 +68,7 @@ const PortfolioDetailPage = ({ params }: { params: Promise<{ id: string; locale:
 					onClick={() => router.back()}
 				>
 					<ChevronLeft className='w-4 h-4 group-hover:-translate-x-1 transition-transform' />
-					Назад к списку
+					{dict.portfolioDetailPage.back}
 				</button>
 			</div>
 
@@ -68,7 +82,7 @@ const PortfolioDetailPage = ({ params }: { params: Promise<{ id: string; locale:
 						{/* Бейдж сезона на самой картинке */}
 						<div className='absolute bottom-8 left-8'>
 							<div className='px-4 py-2 rounded-xl bg-primary text-white text-xs font-black uppercase tracking-widest shadow-xl'>
-								{item.event.season?.name}
+								{item.event.season.name}
 							</div>
 						</div>
 					</div>
@@ -80,7 +94,7 @@ const PortfolioDetailPage = ({ params }: { params: Promise<{ id: string; locale:
 								className='flex-1 h-14 rounded-2xl font-bold gap-2 shadow-lg shadow-primary/20'
 								onClick={() => window.open(fileUrl, '_blank')}
 							>
-								<ExternalLink className='w-5 h-5' /> ЧИТАТЬ PDF
+								<ExternalLink className='w-5 h-5' /> {dict.portfolioDetailPage.readPdf}
 							</Button>
 						)}
 					</div>
@@ -91,9 +105,7 @@ const PortfolioDetailPage = ({ params }: { params: Promise<{ id: string; locale:
 					<div className='space-y-4'>
 						<div className='flex items-center gap-3 text-primary'>
 							<Trophy className='w-5 h-5' />
-							<span className='text-sm font-black uppercase tracking-[0.3em]'>
-								{item.event.type} Award Winner
-							</span>
+							<span className='text-sm font-black uppercase tracking-[0.3em]'>{item.event.type}</span>
 						</div>
 
 						<h1 className='text-5xl lg:text-7xl font-black uppercase italic tracking-tighter leading-none'>
@@ -105,54 +117,65 @@ const PortfolioDetailPage = ({ params }: { params: Promise<{ id: string; locale:
 					<div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
 						<div className='p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2'>
 							<Calendar className='w-5 h-5 text-muted-foreground' />
-							<p className='text-xs text-muted-foreground uppercase font-bold tracking-wider'>Сезон</p>
-							<p className='text-lg font-black uppercase italic'>{item.event.season?.name || 'Н/Д'}</p>
+							<p className='text-xs text-muted-foreground uppercase font-bold tracking-wider'>
+								{dict.portfolioDetailPage.season}
+							</p>
+							<p className='text-lg font-black uppercase italic'>{item.event.season?.name || 'Не указано'}</p>
 						</div>
 						<div className='p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-2'>
 							<FileText className='w-5 h-5 text-muted-foreground' />
-							<p className='text-xs text-muted-foreground uppercase font-bold tracking-wider'>Тип документа</p>
-							<p className='text-lg font-black uppercase italic'>Engineering Portfolio</p>
+							<p className='text-xs text-muted-foreground uppercase font-bold tracking-wider'>
+								{dict.portfolioDetailPage.documentType}
+							</p>
+							<p className='text-lg font-black uppercase italic'>{item.type}</p>
 						</div>
 					</div>
 
 					<div className='space-y-6'>
 						<h3 className='text-xl font-black uppercase italic flex items-center gap-2'>
 							<div className='w-8 h-0.5 bg-primary' />
-							Описание проекта
+							{dict.portfolioDetailPage.descriptionTitle}
 						</h3>
 						<p className='text-xl text-muted-foreground leading-relaxed font-medium'>{item.description}</p>
 					</div>
 
 					<div className='pt-4'>
-						<Button
-							className={cn(
-								'group relative h-16 w-full sm:w-auto px-8 rounded-2xl overflow-hidden',
-								'bg-white/5 border-white/10 backdrop-blur-md',
-								'hover:bg-primary/10 hover:border-primary/50 transition-all duration-500',
-								'flex items-center justify-between gap-6',
-							)}
-							variant='outline'
-							onClick={() => fileUrl && window.open(fileUrl, '_blank')}
-						>
-							{/* Эффект сканирующей линии при ховере */}
-							<div className='absolute inset-0 w-full h-px bg-primary/50 -translate-y-16 group-hover:animate-scan' />
+						{fileUrl && (
+							<Button
+								className={cn(
+									'group relative h-16 w-full sm:w-auto px-8 rounded-2xl overflow-hidden',
+									'bg-white/5 border-white/10 backdrop-blur-md',
+									'hover:bg-primary/10 hover:border-primary/50 transition-all duration-500',
+									'flex items-center justify-between gap-6 hover:cursor-pointer',
+								)}
+								variant='outline'
+								onClick={(e) => {
+									e.stopPropagation()
+									downloadPhoto(getMedia(item.portfolio.url), item.portfolio.name || 'image.jpg')
+								}}
+							>
+								{/* Эффект сканирующей линии при ховере */}
+								<div className='absolute inset-0 w-full h-px bg-primary/50 -translate-y-16 group-hover:animate-scan' />
 
-							<div className='flex items-center gap-4 relative z-10'>
-								<div className='p-2.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300'>
-									<Download className='w-5 h-5' />
+								<div className='flex items-center gap-4 relative z-10'>
+									<div className='p-2.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300'>
+										<Download className='w-5 h-5' />
+									</div>
+									<div className='flex flex-col items-start'>
+										<span className='text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] leading-none mb-1'>
+											{item.type}
+										</span>
+										<span className='text-sm font-black uppercase italic tracking-wider'>
+											{dict.portfolioDetailPage.download}
+										</span>
+									</div>
 								</div>
-								<div className='flex flex-col items-start'>
-									<span className='text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] leading-none mb-1'>
-										Technical Doc
-									</span>
-									<span className='text-sm font-black uppercase italic tracking-wider'>Скачать PDF</span>
-								</div>
-							</div>
 
-							<div className='text-[10px] font-mono text-primary/40 group-hover:text-primary transition-colors'>
-								[ 12.4 MB ]
-							</div>
-						</Button>
+								<div className='text-[10px] font-mono text-primary/40 group-hover:text-primary transition-colors'>
+									[ {formatFileSize(item.portfolio.size)} ]
+								</div>
+							</Button>
+						)}
 					</div>
 				</div>
 			</section>
