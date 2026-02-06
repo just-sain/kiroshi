@@ -137,6 +137,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 					/>
 					<InfoCard
 						desc={dict.info_cards.gallery.desc}
+						href='/about/gallery'
 						icon={ImageIcon}
 						locale={locale}
 						title={dict.info_cards.gallery.title}

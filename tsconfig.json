@@ -44,9 +44,7 @@
 			{
 				"name": "next"
 			}
-		],
-		// test
-		"types": ["jest", "@testing-library/jest-dom", "node"]
+		]
 	},
 	"include": [
 		"svgr.d.ts", // svgr
