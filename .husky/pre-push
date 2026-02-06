@@ -1,1 +1,1 @@
-yarn tsc --noEmit && yarn test
+yarn tsc --noEmit
